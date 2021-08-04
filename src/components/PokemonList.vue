@@ -1,10 +1,12 @@
 <template>
-   <v-container class="mt-5">
+   <v-container class="mt-2">
       <v-row  align="center" justify="center">
-      <v-col v-for="(pokemon, index) in pokemons.results" :key="index" cols="2" class="poke-card">
-          
-          <img :src="imageUrl + ((index+1) + 20 * page) + '.svg'" width="96" height="96" class="poke-img">
+      <v-col v-for="(pokemon, index) in pokemons.results" :key="index" cols="12" md="3" sm="5" lg="2" xl="2">
+          <div class="poke-card">
+              <img :src="imageUrl + ((index+1) + 20 * page) + '.svg'" width="70" height="70" class="poke-img">
           <h3 class="poke-title">{{ pokemon.name }}</h3>
+          </div>
+          
       </v-col>
       <v-row justify="center" class="col-12 mt-10">
           <v-btn
@@ -12,7 +14,7 @@
             depressed
             color="error"
             @click="previous"
-            class="mr-5"
+            class="mr-5 botao"
             >
             BACK
             </v-btn>
@@ -20,6 +22,7 @@
             depressed
             color="primary"
             @click="next"
+            class="botao"
             >
             NEXT
             </v-btn>
@@ -46,7 +49,8 @@ export default {
             contador : 0,
             show: false,
             index: '',
-            page: 0
+            page: 0,
+            limit: 14,
             
             
 
@@ -117,9 +121,35 @@ export default {
      margin-left: 25%;
  }
  .poke-card{
+     padding-top: 15px;
      background-color: white;
+     height: 130px;
      margin: 5px;
      border-radius: 5px;
+     cursor: pointer;
+     
      /* box-shadow: 5px 5px 5px black; */
  }
+ @media (min-width: 1700px)
+{
+  .poke-card
+   {
+    width: 170px !important;
+   }
+   .botao{
+       margin-right: 100px !important;
+   }
+}
+ @media (max-width: 600px)
+{
+  .poke-card
+   {
+   
+   width: 170px;
+   margin-left: 23%;
+    
+   }
+} 
+
+
 </style>

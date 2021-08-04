@@ -2,7 +2,8 @@
 <v-app>
   <v-container>
     <div>
-      <h2 class="titulo white--text">Pokedex</h2>
+      <v-row justify="center mt-2 mb-2"> <div class="titulo"><v-img :src="logoImagem" height="150" width="400" alt="pokemon"></v-img></div> </v-row>
+     
      <PokemonList :apiUrl="apiUrl" :imageUrl="imageUrl" />
     
     </div>
@@ -18,26 +19,40 @@
 /* import PokemonSearch from './components/PokemonSearch.vue'
 import PokemonDetail from './components/PokemonDetail.vue' */
 import PokemonList from './components/PokemonList.vue'
-export default {
+import Vue from 'vue'
+export default Vue.extend(
+  {
   components: { /* PokemonSearch, PokemonDetail, */ PokemonList},
   data() {
     return {
       apiUrl: 'https://pokeapi.co/api/v2/pokemon/',
-      imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/'
+      imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/',
+      logoImagem: 'http://localhost:8080/img/pokemon-logo.6d1b29ab.png'
+      
     }
   },
 }
+) 
 </script>
 
 <style>
-#app{
-  background-color: #db5656;
-}
+  #app{
+    /* background-color: #000000;
+    background-image: linear-gradient(315deg, #000000 0%, #b82e1f 74%); */
+    background-color: #990000;
+    background-image: linear-gradient(147deg, #990000 0%, #ff0000 74%);
+  }
 
-   
+
   .titulo{
     justify-content: center;
     display: flex;
   }
-  
+   @media (min-width: 1700px)
+{
+  .titulo{
+    margin-right: 100px;
+  }
+}
+
 </style>
