@@ -1,28 +1,43 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<v-app>
+  <v-container>
+    <div>
+      <h2 class="titulo white--text">Pokedex</h2>
+     <PokemonList :apiUrl="apiUrl" :imageUrl="imageUrl" />
+    
+    </div>
+    
+    
+  </v-container>
+</v-app>
+  
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+/* import PokemonSearch from './components/PokemonSearch.vue'
+import PokemonDetail from './components/PokemonDetail.vue' */
+import PokemonList from './components/PokemonList.vue'
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  components: { /* PokemonSearch, PokemonDetail, */ PokemonList},
+  data() {
+    return {
+      apiUrl: 'https://pokeapi.co/api/v2/pokemon/',
+      imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/'
+    }
+  },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#app{
+  background-color: #db5656;
 }
+
+   
+  .titulo{
+    justify-content: center;
+    display: flex;
+  }
+  
 </style>
