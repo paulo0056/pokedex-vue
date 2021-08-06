@@ -2,7 +2,7 @@
 <v-app>
   <v-container>
     <div>
-      <v-row justify="center mt-2 mb-2"> <div class="titulo"><v-img :src="logoImagem" height="150" width="400" alt="pokemon"></v-img></div> </v-row>
+      <v-row justify="center mt-1"> <div class="titulo"><v-img src="./assets/pokemon-logo.png" height="150" width="400" alt="pokemon"></v-img></div> </v-row>
      
      <PokemonList :apiUrl="apiUrl" :imageUrl="imageUrl" />
     
@@ -27,7 +27,7 @@ export default Vue.extend(
     return {
       apiUrl: 'https://pokeapi.co/api/v2/pokemon/',
       imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/',
-      logoImagem: 'http://localhost:8080/img/pokemon-logo.6d1b29ab.png'
+
       
     }
   },

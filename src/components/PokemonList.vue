@@ -1,7 +1,50 @@
 <template>
+
+    
    <v-container class="mt-2">
-      <v-row  align="center" justify="center">
-      <v-col v-for="(pokemon, index) in pokemons.results" :key="index" cols="12" md="3" sm="5" lg="2" xl="2">
+       <v-row align="center">
+        <v-col cols="2" >
+            <v-row justify="center .d-sm-none .d-md-flex">
+                 <v-btn
+            v-show="show"
+            depressed
+            color="error"
+            @click="previous"
+            class="botoes"
+            >
+            BACK
+            </v-btn>
+            </v-row>
+            </v-col>
+        <v-col>
+            <v-row  align="center" justify="center">
+      <v-col v-for="(pokemon, index) in pokemons.results" :key="index" cols="12" md="4" sm="5" lg="3" xl="3">
+          <div class="poke-card">
+              <img :src="imageUrl + ((index+1) + 20 * page) + '.svg'" width="70" height="70" class="poke-img">
+          <h3 class="poke-title">{{ pokemon.name }}</h3>
+          </div>
+          
+      </v-col>
+
+      </v-row>
+        </v-col>
+        <v-col cols="2"> 
+            <v-row justify="center">
+                <v-btn
+            depressed
+            color="primary"
+            @click="next"
+            
+             
+            >
+            NEXT
+            </v-btn>
+            </v-row>
+            
+            </v-col>
+    </v-row>
+      <!-- <v-row  align="center" justify="center">
+      <v-col v-for="(pokemon, index) in pokemons.results" :key="index" cols="12" md="5" sm="5" lg="3" xl="3">
           <div class="poke-card">
               <img :src="imageUrl + ((index+1) + 20 * page) + '.svg'" width="70" height="70" class="poke-img">
           <h3 class="poke-title">{{ pokemon.name }}</h3>
@@ -31,7 +74,7 @@
       
         
 
-      </v-row>
+      </v-row> -->
     </v-container>
 </template>
 
@@ -45,12 +88,10 @@ export default {
     data() {
         return {
             pokemons: [],
-            nextUrl: '',
             contador : 0,
             show: false,
             index: '',
             page: 0,
-            limit: 14,
             
             
 
@@ -112,29 +153,44 @@ export default {
 </script>
 
 <style>
- .poke-img{
-     margin-left: 25%;
-     display: flex;
-    
+
+
+ @media (max-width: 960px)
+{
+ .botoes{
+     display: none;
+}
  }
- .poke-title{
-     margin-left: 25%;
+
+ @media (min-width: 1700px)
+{
+  .next{
+     margin-left: 20%;
  }
+}
+
  .poke-card{
-     padding-top: 15px;
-     background-color: white;
+     padding: 10px;
+     background-color: #fff;
      height: 130px;
-     margin: 5px;
+        display: grid;
+        text-align: center;
+        justify-content: center;
+        text-transform: capitalize;
+        align-items: center;
      border-radius: 5px;
      cursor: pointer;
      
      /* box-shadow: 5px 5px 5px black; */
  }
- @media (min-width: 1700px)
+ 
+ 
+ /* @media (min-width: 1700px)
 {
   .poke-card
    {
     width: 170px !important;
+   
    }
    .botao{
        margin-right: 100px !important;
@@ -149,7 +205,7 @@ export default {
    margin-left: 23%;
     
    }
-} 
+}  */
 
 
 </style>
