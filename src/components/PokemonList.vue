@@ -34,7 +34,7 @@
             depressed
             color="primary"
             @click="next"
-            
+            class="botoes"
              
             >
             NEXT
@@ -42,7 +42,33 @@
             </v-row>
             
             </v-col>
+           
     </v-row>
+                <div>
+            <v-row justify="center mt-3">
+                   <v-btn
+            v-show="show"
+            depressed
+            color="error"
+            @click="previous"
+            class="botoes-lg"
+            >
+            BACK
+            </v-btn>
+                        <v-btn
+                    depressed
+                    color="primary"
+                    @click="next"
+                    class="ml-5 botoes-lg"
+                    
+                    >
+                    NEXT
+                    </v-btn>
+                   
+            </v-row>
+                </div>
+                
+         
       <!-- <v-row  align="center" justify="center">
       <v-col v-for="(pokemon, index) in pokemons.results" :key="index" cols="12" md="5" sm="5" lg="3" xl="3">
           <div class="poke-card">
@@ -158,7 +184,13 @@ export default {
  @media (max-width: 960px)
 {
  .botoes{
-     display: none;
+     display: none !important;;
+}
+ }
+ @media (min-width: 960px)
+{
+ .botoes-lg{
+     display: none !important;;
 }
  }
 
@@ -184,28 +216,6 @@ export default {
      /* box-shadow: 5px 5px 5px black; */
  }
  
- 
- /* @media (min-width: 1700px)
-{
-  .poke-card
-   {
-    width: 170px !important;
-   
-   }
-   .botao{
-       margin-right: 100px !important;
-   }
-}
- @media (max-width: 600px)
-{
-  .poke-card
-   {
-   
-   width: 170px;
-   margin-left: 23%;
-    
-   }
-}  */
 
 
 </style>
