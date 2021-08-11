@@ -86,6 +86,8 @@
         <div>
           {{detail.name}}
         </div>
+      
+      
 
         </div
     ></v-dialog>
@@ -104,7 +106,8 @@ export default {
       page: 0,
       showDialog: false,
       detail: [],
-      list: undefined,
+      tipos: [],
+     
     };
   },
 
@@ -153,9 +156,17 @@ export default {
         .get(`https://pokeapi.co/api/v2/pokemon/${index + 1 + 20 * this.page}`)
         .then((res) => {
           this.detail = res.data;
+          this.tipos = res.data.map(info => {
+          return {
+          typeName: info.name
+          }
+          })
+          
         })
         .catch((e) => console.log(e));
-      this.showDialog = true
+         this.showDialog = true
+      
+            
    
      
      
