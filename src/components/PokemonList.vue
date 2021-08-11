@@ -40,7 +40,7 @@
           >
             <div class="poke-card" @click="dialogOn(index)">
               <img
-                :src="imageUrl + (index + 1 + 20 * page) + '.svg'"
+                :src="imageUrl + ((index + 1) + 20 * page) + '.svg'"
                 width="70"
                 height="70"
                 class="poke-img"
@@ -75,38 +75,6 @@
       </v-row>
     </div>
 
-    <!-- <v-row  align="center" justify="center">
-      <v-col v-for="(pokemon, index) in pokemons.results" :key="index" cols="12" md="5" sm="5" lg="3" xl="3">
-          <div class="poke-card">
-              <img :src="imageUrl + ((index+1) + 20 * page) + '.svg'" width="70" height="70" class="poke-img">
-          <h3 class="poke-title">{{ pokemon.name }}</h3>
-          </div>
-          
-      </v-col>
-      <v-row justify="center" class="col-12 mt-10">
-          <v-btn
-            v-show="show"
-            depressed
-            color="error"
-            @click="previous"
-            class="mr-5 botao"
-            >
-            BACK
-            </v-btn>
-          <v-btn
-            depressed
-            color="primary"
-            @click="next"
-            class="botao"
-            >
-            NEXT
-            </v-btn>
-            
-      </v-row>
-      
-        
-
-      </v-row> -->
     <v-dialog v-model="showDialog" width="500"
       ><div class="bg">
         <img
@@ -115,7 +83,12 @@
           height="70"
           class="poke-img"
         />
-        <v-text></v-text>
+        <v-text>
+          {{detail.name}}
+        </v-text>
+        <v-text>
+          {{detail.types}}
+        </v-text>
         </div
     ></v-dialog>
   </v-container>
@@ -132,7 +105,8 @@ export default {
       id: 0,
       page: 0,
       showDialog: false,
-      detail: []
+      detail: [],
+      list: undefined,
     };
   },
 
@@ -168,26 +142,25 @@ export default {
 
     next() {
       this.fetchPokemons(this.pokemons.next);
-      console.log(this.contador);
       this.show = true;
       this.page = this.page + 1;
     },
     previous() {
       this.fetchPokemons(this.pokemons.previous);
-      this.contador--;
-      if (this.contador == 0) {
-        this.show = false;
-      }
       this.page = this.page - 1;
     },
-    dialogOn(index) {
-      this.showDialog = true;
-      this.id = index + 1;
-      fetch(
-        `https://pokeapi.co/api/v2/pokemon/${index + 1 + 20 * this.page}`
-      ).then((res) => {this.detail = res.json()} );
-     console.log(this.detail)
-      
+    async dialogOn(index) {
+      this.id = index + 1 + 20 * this.page;
+      await axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${index + 1 + 20 * this.page}`)
+        .then((res) => {
+          this.detail = res.data;
+        })
+        .catch((e) => console.log(e));
+      this.showDialog = true
+      console.log(this.detail.weight)
+     
+     
     },
   },
   created() {
