@@ -15,7 +15,7 @@
 
     <v-row align="center">
       <v-col cols="2">
-        <v-row justify="center .d-sm-none .d-md-flex">
+        <v-row justify="center">
           <v-btn
             v-show="show"
             depressed
@@ -59,7 +59,7 @@
       </v-col>
     </v-row>
     <div>
-      <v-row justify="center mt-3">
+      <v-row justify="center">
         <v-btn
           v-show="show"
           depressed
@@ -83,12 +83,10 @@
           height="70"
           class="poke-img"
         />
-        <v-text>
+        <div>
           {{detail.name}}
-        </v-text>
-        <v-text>
-          {{detail.types}}
-        </v-text>
+        </div>
+
         </div
     ></v-dialog>
   </v-container>
@@ -158,7 +156,7 @@ export default {
         })
         .catch((e) => console.log(e));
       this.showDialog = true
-      console.log(this.detail.weight)
+   
      
      
     },

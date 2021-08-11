@@ -2,7 +2,7 @@
 <v-app>
   <v-container>
     <div>
-      <v-row justify="center mt-1"> <div class="titulo"><v-img src="./assets/pokemon-logo.png" height="130" width="350" alt="pokemon"></v-img></div> </v-row>
+      <v-row justify="center"> <div class="titulo"><v-img src="./assets/pokemon-logo.png" height="130" width="350" alt="pokemon"></v-img></div> </v-row>
      
      <PokemonList :apiUrl="apiUrl" :imageUrl="imageUrl" />
      
