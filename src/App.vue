@@ -2,9 +2,10 @@
 <v-app>
   <v-container>
     <div>
-      <v-row justify="center mt-1"> <div class="titulo"><v-img src="./assets/pokemon-logo.png" height="150" width="400" alt="pokemon"></v-img></div> </v-row>
+      <v-row justify="center mt-1"> <div class="titulo"><v-img src="./assets/pokemon-logo.png" height="130" width="350" alt="pokemon"></v-img></div> </v-row>
      
      <PokemonList :apiUrl="apiUrl" :imageUrl="imageUrl" />
+     
     
     </div>
     
@@ -16,21 +17,28 @@
 </template>
 
 <script>
-/* import PokemonSearch from './components/PokemonSearch.vue'
-import PokemonDetail from './components/PokemonDetail.vue' */
+/* import PokemonSearch from './components/PokemonSearch.vue'*/
+
 import PokemonList from './components/PokemonList.vue'
+
+
 import Vue from 'vue'
 export default Vue.extend(
   {
-  components: { /* PokemonSearch, PokemonDetail, */ PokemonList},
+  components: { /* PokemonSearch,*/PokemonList},
+  
   data() {
     return {
       apiUrl: 'https://pokeapi.co/api/v2/pokemon/',
       imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/',
+    
+     
 
       
     }
   },
+ 
+
 }
 ) 
 </script>
