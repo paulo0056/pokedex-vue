@@ -9,6 +9,7 @@
             solo
             background-color="red"
           ></v-text-field>
+            
         </form>
       </v-col>
     </v-row>
@@ -148,6 +149,7 @@ export default {
       id: 0,
       page: 0,
       showDialog: false,
+      showDialog2: false,
       detail: [],
       tipos: {},
       status:[
@@ -230,12 +232,31 @@ export default {
           number: data.id,
           weight: data.weight,
           height: data.height,
+          types: data.types.map( ({type}) => type.name),
+          stats: data.stats.map( stats => stats.base_stat)
+        }
+
+        
+         this.showDialog = true
+      
+            
+   
+     
+     
+    },
+    async Buscar(nome) {
+        const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${nome}`).then(res => res.json());
+         this.detail = {
+          name: data.name,
+          number: data.id,
+          weight: data.weight,
+          height: data.height,
           types: data.types.map(({ type }) => type.name),
           stats: data.stats.map((stats) => stats.base_stat)
         }
 
         
-         this.showDialog = true
+         this.showDialog2 = true
       
             
    
