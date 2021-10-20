@@ -1,20 +1,70 @@
 <template>
   <v-container class="mt-2">
+      
     <v-row justify="center">
       <v-col cols="12" sm="6" md="3">
-        <form action="">
           <v-text-field
+           @keyup.enter="formSearch()"
+            v-model="namepokemon"
             class="search-box"
             placeholder="Pesquise seu pokemon"
             solo
             background-color="red"
           ></v-text-field>
-            
-        </form>
       </v-col>
     </v-row>
-
-    <v-row align="center">
+ 
+    <div v-if="showSearch">
+        <div class="bg mt-5" v-on="Buscar(nome)" @click="dialogSearch()">
+        <img
+          :src="imageUrl + detail.number + '.png'"
+          width="200"
+          height="200"
+          class="poke-dialog"
+        />
+        <v-row>
+          <v-col cols="12" class="d-flex justify-center">
+            <h2 class="dialog-title red--text">{{detail.name}}</h2>
+          
+        </v-col>
+        <v-col cols="6" class="d-flex justify-center ml-9 nome-poke-sm">
+          <h4 class="dialog-title brown--text">Peso:</h4>
+          <h4 class="dialog-title"> {{detail.weight}}kg</h4>
+         
+        </v-col>
+        <v-col cols="3" class="d-flex justify-center">
+          <h4 class="dialog-title brown--text">Altura:</h4>
+          <h4 class="dialog-title">{{detail.height}}m</h4>
+         
+        </v-col>
+         <v-col cols="6" class="d-flex justify-end">
+          <h4 class="dialog-title">Tipo:</h4>
+         
+        </v-col>
+        
+        <v-col cols="1"  v-for="(type, t) in detail.types"
+           :key="t" class="d-flex justify-center">   
+             <ul><li><h4 class="dialog-title pink--text">{{type}}</h4></li></ul>
+        </v-col>
+        </v-row>
+        
+        <div  >
+          
+        </div>
+         <v-row justify="center" align="center" class="ma-2 mt-7">
+           <v-col cols="2" v-for="(item, s) in status"
+           :key="s">
+             <div class="d-flex justify-center font-weight-bold green--text"><div class="h5-new">{{item.nome}}</div></div>
+           </v-col>
+           <v-col cols="2"  v-for="base_stat in detail.stats"
+           :key="base_stat.effort">
+             <div class="d-flex justify-center font-weight-bold indigo--text"><h4>{{base_stat}}</h4></div>
+           </v-col>        
+        </v-row>
+        </div
+    >
+    </div>
+    <v-row align="center" v-else-if="this.pokemons">
       <v-col cols="2">
         <v-row justify="center">
           <v-btn
@@ -79,7 +129,7 @@
     <v-dialog v-model="showDialog" width="550"
       ><div class="bg">
         <img
-          :src="imageUrl + id + '.png'"
+          :src="imageUrl + detail.number + '.png'"
           width="200"
           height="200"
           class="poke-dialog"
@@ -121,17 +171,8 @@
            <v-col cols="2"  v-for="base_stat in detail.stats"
            :key="base_stat.effort">
              <div class="d-flex justify-center font-weight-bold indigo--text"><h4>{{base_stat}}</h4></div>
-           </v-col>
-           
-           
-          
+           </v-col>        
         </v-row>
-       
-     
-    
-      
-      
-
         </div
     ></v-dialog>
   </v-container>
@@ -143,6 +184,9 @@ export default {
   props: ["apiUrl", "imageUrl"],
   data() {
     return {
+      showSearch: false,
+      imagemPokemon: undefined,
+      namepokemon: undefined,
       contador: 0,
       pokemons: [],
       show: false,
@@ -151,6 +195,7 @@ export default {
       showDialog: false,
       showDialog2: false,
       detail: [],
+      detail2: [],
       tipos: {},
       status:[
         {nome: 'HP'}, 
@@ -165,32 +210,21 @@ export default {
     };
   },
 
+  watch: {
+   async namepokemon(value){
+      if(value === undefined || value === ''){
+        await this.fetchPokemons();
+      }
+    }
+  },
+
   methods: {
-    /*    fetchData(){
-            let req = new Request(this.apiUrl);
-            fetch(req)
-                .then((resp) => {
-                    if (resp.status === 200)
-                    return resp.json();
-                    
-                })
-                .then((data) =>{
-                    this.nextUrl = data.next;
-                    data.results.forEach(pokemon => {
-                        pokemon.id = pokemon.url.split('/')
-                        .filter(funcion(part) { return !!part }).pop();
-                        this.pokemons.push(pokemon);
-                    })
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        } , */
     fetchPokemons(url = this.apiUrl) {
       axios
         .get(url)
         .then((res) => {
           this.pokemons = res.data;
+          this.showSearch = false;
         })
         .catch((e) => console.log(e));
     },
@@ -212,20 +246,15 @@ export default {
           
      
     },
+    formSearch(){
+      this.showSearch = true
+    },
+     async dialogSearch() {
+
+         this.showDialog = true 
+    },
     async dialogOn(index) {
       this.id = index + 1 + 20 * this.page;
-     /*  await axios
-        .get(`https://pokeapi.co/api/v2/pokemon/${index + 1 + 20 * this.page}`)
-        .then((res) => {
-          this.detail = res.data;
-          this.tipos = res.data.map(type => {
-          return {
-          typeName: type.name
-          }
-          })
-          
-        })
-        .catch((e) => console.log(e)); */
         const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${index + 1 + 20 * this.page}`).then(res => res.json());
          this.detail = {
           name: data.name,
@@ -235,17 +264,12 @@ export default {
           types: data.types.map( ({type}) => type.name),
           stats: data.stats.map( stats => stats.base_stat)
         }
-
-        
-         this.showDialog = true
-      
-            
-   
-     
-     
+         this.showDialog = true 
     },
     async Buscar(nome) {
-        const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${nome}`).then(res => res.json());
+        nome = this.namepokemon
+        if(this.namepokemon){
+          const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${nome}`).then(res => res.json());
          this.detail = {
           name: data.name,
           number: data.id,
@@ -253,20 +277,17 @@ export default {
           height: data.height,
           types: data.types.map(({ type }) => type.name),
           stats: data.stats.map((stats) => stats.base_stat)
+        } 
+           
+        } else {
+          this.detail = [];
         }
-
-        
-         this.showDialog2 = true
-      
-            
-   
-     
-     
+  
     },
   },
-  created() {
+ async created() {
     /* this.fetchData();  */
-    this.fetchPokemons();
+    await this.fetchPokemons();
   },
 };
 </script>
